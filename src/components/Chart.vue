@@ -37,7 +37,7 @@ export default {
         datasets: [
           {
             label: "EUR to RUB",
-            backgroundColor: "#f87979",
+            backgroundColor: "#667aff",
             data: this.getDataChart.dataChart
           }
         ]
