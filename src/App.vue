@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="intro"></div>
+    <div class="intro">CURRENCY EXCHANGE RATES</div>
     <Table></Table>
   </div>
 </template>
@@ -35,6 +35,11 @@ export default {
   width: 100%;
 }
 .intro {
+  text-align: left;
+  color: white;
+  font-size: 25px;
+  box-sizing: border-box;
+  padding: 30px 40px 0;
   width: 100%;
   height: 100px;
   background: darkblue;
