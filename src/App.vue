@@ -27,10 +27,11 @@ export default {
   color: #2c3e50;
   margin: 0;
   padding: 0;
-  justify-content: space-between;
+  overflow: hidden;
   box-sizing: content-box;
   background: #f0f0f0;
   height: 100%;
+  width: 100%;
 }
 .intro {
   width: 100%;

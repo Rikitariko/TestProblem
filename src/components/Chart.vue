@@ -5,11 +5,14 @@
 
 <script>
 import { Line } from "vue-chartjs/es/BaseCharts";
+import { reactiveData } from "vue-chartjs/es/mixins/index";
+
 import Vue from "vue";
 Vue.component("Line", Line);
 
 export default {
   extends: Line,
+  mixins: [reactiveData],
   mounted: function mounted() {
     this.renderChart(
       {
@@ -46,9 +49,10 @@ export default {
   max-width: 800px;
   margin: 150px auto;
 }
+
 #line-chart.chartjs-render-monitor {
-    height: 400px;
-    width: 600px;
-    margin: 20px;
+  height: 400px;
+  width: 500px;
+  margin: 20px;
 }
 </style>
