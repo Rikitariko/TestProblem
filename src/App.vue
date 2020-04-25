@@ -29,7 +29,7 @@ export default {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  box-sizing: content-box;
+  box-sizing: border-box;
   background: #f7f7f7;
   height: 100%;
   width: 100%;

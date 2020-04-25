@@ -1,6 +1,9 @@
 <template>
   <div class="chart">
-    <LineChart :chart-data="dataPoints"></LineChart>
+    <div class="title">Currency Change Chart</div>
+    <div>
+      <LineChart :chart-data="dataPoints"></LineChart>
+    </div>
   </div>
 </template>
 
@@ -52,9 +55,12 @@ export default {
   box-sizing: content-box;
   overflow: hidden;
   padding: 20px;
-  width: 500px;
+  width: 85%;
 }
-
+.title {
+  font-size: 19px;
+  padding: 0 0 10px;
+}
 #line-chart {
   height: 300px;
   width: 100%;

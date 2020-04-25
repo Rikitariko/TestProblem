@@ -1,19 +1,29 @@
 <template>
   <div class="converter">
-    <div class="input-container">
-      <b-form-input v-model="currency1"></b-form-input>
-      <b-form-input v-model="this.changeValue"></b-form-input>
+    <div class="title">
+      1 {{ this.selected1 }} equals {{ this.validCurrency }}
+      {{ this.selected2 }}
     </div>
+    <div class="converter-container">
+      <div class="input-container">
+        <b-form-input v-model="currency1"></b-form-input>
+        <b-form-input v-model="this.changeValue"></b-form-input>
+      </div>
 
-    <div class="input-container">
-      <b-form-select
-        v-model="selected1"
-        :options="this.getCurrencyName"
-        @input="setNewCurrency($event, 1)"
-      >
-      </b-form-select>
-      <b-form-select v-model="selected2" :options="this.getCurrencyName" @input="setNewCurrency($event, 2)">
-      </b-form-select>
+      <div class="input-container">
+        <b-form-select
+          v-model="selected1"
+          :options="this.getCurrencyName"
+          @input="setNewCurrency($event, 1)"
+        >
+        </b-form-select>
+        <b-form-select
+          v-model="selected2"
+          :options="this.getCurrencyName"
+          @input="setNewCurrency($event, 2)"
+        >
+        </b-form-select>
+      </div>
     </div>
   </div>
 </template>
@@ -71,7 +81,8 @@ export default {
 
 <style scoped>
 .converter {
-  width: 500px;
+  width: 85%;
+  min-height: 120px;
   border: 1px solid #f0f0f0;
   border-radius: 5px;
   box-sizing: content-box;
@@ -79,8 +90,19 @@ export default {
   margin-bottom: 20px;
   background: white;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.converter-container {
+  font-size: 19px;
+  width: 100%;
+  height: 120px;
+  padding: 10px 20px 10px;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.title {
 }
 
 .input-container {

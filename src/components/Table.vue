@@ -1,17 +1,19 @@
 <template>
-  <div class="container">
+  <div class="container-main">
     <div class="table-container">
       <div
-        style="display: flex; flex-direction: row; font-size: 19px; justify-content: space-between"
+        style="display: flex; flex-direction: row; font-size: 19px; justify-content: center; align-self:center;"
       >
-        <div>Latest foreign exchange reference rates with base:</div>
-        <b-form-select
-          style="width: 100px;"
-          v-model="selected2"
-          :options="this.getCurrencyName"
-          @input="setNewCurrency($event)"
-        >
-        </b-form-select>
+        <div style="padding: 5px">Current exchange rates with the base:</div>
+        <div>
+          <b-form-select
+            style="width: 100px;"
+            v-model="selected2"
+            :options="this.getCurrencyName"
+            @input="setNewCurrency($event)"
+          >
+          </b-form-select>
+        </div>
       </div>
       <b-table :items="getDataTable" :busy="isBusy" class="mt-3" outlined>
         <template v-slot:table-busy>
@@ -81,10 +83,12 @@ export default {
 
 <style scoped>
 .side-container {
+  width: 45%;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
-.container {
+.container-main {
   padding: 40px;
   width: 100%;
   margin: 0;
@@ -92,18 +96,18 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   display: flex;
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 
 .table-container {
+  width: 45%;
   background: white;
-  box-sizing: content-box;
+  box-sizing: border-box;
   padding: 20px;
   border-radius: 5px;
 }
 
 .table {
-  min-width: 550px;
   background: white;
   margin: 0;
   border-radius: 10px !important;
