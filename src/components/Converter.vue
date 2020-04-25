@@ -2,34 +2,67 @@
   <div class="converter">
     <div class="input-container">
       <b-form-input v-model="currency1"></b-form-input>
-      <b-form-input v-model="currency2"></b-form-input>
+      <b-form-input v-model="this.changeValue"></b-form-input>
     </div>
 
     <div class="input-container">
-      <b-form-select v-model="selected1" :options="options"> </b-form-select>
-      <b-form-select v-model="selected2" :options="options"> </b-form-select>
+      <b-form-select
+        v-model="selected1"
+        :options="this.getCurrencyName"
+        @input="setNewCurrency($event, 1)"
+      >
+      </b-form-select>
+      <b-form-select v-model="selected2" :options="this.getCurrencyName" @input="setNewCurrency($event, 2)">
+      </b-form-select>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
+const AXIOS = axios.create({
+  baseURL: "https://api.exchangeratesapi.io/",
+  headers: { "Content-Type": "application/json; charset=UTF-8" }
+});
+
 export default {
   name: "Converter",
   data() {
     return {
+      validCurrency: 1,
       currency1: 1,
       currency2: 1,
-      selected1: 1,
-      selected2: 2,
+      selected1: "RUB",
+      selected2: "RUB",
       options: this.getCurrencyName
     };
   },
+  methods: {
+    async setNewCurrency(currency, version) {
+      console.log(currency);
+      if (version === 1) {
+        await AXIOS.get("latest?base=" + currency).then(response => {
+          this.validCurrency = response.data["rates"][this.selected2];
+        });
+      } else {
+        await AXIOS.get("latest?base=" + this.selected1).then(response => {
+          this.validCurrency = response.data["rates"][currency];
+        });
+      }
+    }
+  },
   computed: {
+    changeValue() {
+      return this.validCurrency * this.currency1;
+    },
     getCurrencyName: function() {
-      let data = this.$store.getters.getDataChart;
+      let data = this.$store.getters.getCurrency;
+      console.log(data);
       let options = [];
       for (let i = 0; i < data.length; i++)
-        options.push({ value: i, text: data[i] });
+        options.push({ value: data[i], text: data[i] });
+      console.log(options);
       return options;
     }
   }
@@ -38,6 +71,7 @@ export default {
 
 <style scoped>
 .converter {
+  width: 500px;
   border: 1px solid #f0f0f0;
   border-radius: 5px;
   box-sizing: content-box;
@@ -48,9 +82,14 @@ export default {
   flex-direction: row;
   justify-content: space-between;
 }
+
 .input-container {
   width: 45%;
   display: flex;
   flex-direction: column;
+}
+.form-control,
+.custom-select {
+  margin-bottom: 10px;
 }
 </style>

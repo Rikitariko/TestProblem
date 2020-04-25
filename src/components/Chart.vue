@@ -49,11 +49,14 @@ export default {
   border: 1px solid #f0f0f0;
   border-radius: 5px;
   background: white;
+  box-sizing: content-box;
+  overflow: hidden;
+  padding: 20px;
+  width: 500px;
 }
 
-#line-chart.chartjs-render-monitor {
+#line-chart {
   height: 300px;
-  width: 400px;
-  margin: 20px;
+  width: 100%;
 }
 </style>

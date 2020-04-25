@@ -67,7 +67,7 @@ const getters = {
   },
   getDataChart: state => {
     return state.chart;
-  }
+  },
 };
 
 const mutations = {
