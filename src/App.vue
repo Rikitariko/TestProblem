@@ -14,8 +14,9 @@ export default {
     Table
   },
   beforeCreate() {
-    this.$store.dispatch("setInitialCurrency", "USD");
+    this.$store.dispatch("setInitialCurrency", "EUR");
     this.$store.dispatch("setInitialTable");
+    this.$store.dispatch("setInitialChart", "RUB");
   }
 };
 </script>
@@ -29,7 +30,7 @@ export default {
   padding: 0;
   overflow: hidden;
   box-sizing: content-box;
-  background: #f0f0f0;
+  background: #f7f7f7;
   height: 100%;
   width: 100%;
 }

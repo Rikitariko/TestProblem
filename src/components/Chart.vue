@@ -1,6 +1,6 @@
 <div class="Chart">
-    <h1 style="text-align:center;">Barchart</h1>
-    <Line />
+  <h1 style="text-align:center;">Barchart</h1>
+  <Line />
 </div>
 
 <script>
@@ -13,25 +13,23 @@ Vue.component("Line", Line);
 export default {
   extends: Line,
   mixins: [reactiveData],
+  props: {
+      // eslint-disable-next-line vue/require-valid-default-prop
+    labels: { type: Array, default: [1, 2] },
+      // eslint-disable-next-line vue/require-valid-default-prop
+    dataChart: { type: Array, default: [1, 2] }
+  },
   mounted: function mounted() {
     this.renderChart(
       {
-        labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July"
-        ],
+        labels: this.labels,
         datasets: [
           {
             smooth: false,
-            label: "Data One",
+            label: "EUR to RUB",
             fill: "start",
             backgroundColor: "blue",
-            data: [40, 39, 10, 40, 39, 80, 40]
+            data: this.dataChart
           }
         ]
       },
@@ -45,14 +43,9 @@ export default {
 </script>
 
 <style>
-.small {
-  max-width: 800px;
-  margin: 150px auto;
-}
-
 #line-chart.chartjs-render-monitor {
-  height: 400px;
-  width: 500px;
+  height: 300px;
+  width: 300px;
   margin: 20px;
 }
 </style>

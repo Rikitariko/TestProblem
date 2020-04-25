@@ -1,5 +1,17 @@
 import axios from "axios";
 
+function formatDate(date) {
+  let dd = date.getDate();
+  if (dd < 10) dd = "0" + dd;
+
+  let mm = date.getMonth() + 1;
+  if (mm < 10) mm = "0" + mm;
+
+  let yy = date.getFullYear();
+
+  return yy + "-" + mm + "-" + dd;
+}
+
 const AXIOS = axios.create({
   baseURL: "https://api.exchangeratesapi.io/",
   headers: { "Content-Type": "application/json; charset=UTF-8" }
@@ -42,12 +54,16 @@ const state = {
     "KRW",
     "PLN"
   ],
-  table: []
+  table: [],
+  chart: []
 };
 
 const getters = {
   getCurrencyTable: state => {
     return state.table;
+  },
+  getDataChart: state => {
+    return state.chart;
   }
 };
 
@@ -57,6 +73,31 @@ const mutations = {
   },
   setInitialCurrency: (state, payload) => {
     state.initialCurrency = payload;
+  },
+  setInitialChart: (state, payload) => {
+    let date = new Date();
+    //console.log(date);
+    let data = payload.data.rates;
+
+    let max = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (let key in data) {
+      max[+key.substr(5, 2)] = Math.max(
+        data[key]["RUB"],
+        max[+key.substr(5, 2)]
+      );
+    }
+
+    let dataChart = [];
+    let labels = [];
+    for (let i = date.getMonth(); i <= 12; i++) {
+      labels.push(i);
+      dataChart.push(max[i]);
+    }
+    for (let i = 1; i < date.getMonth(); i++) {
+      labels.push(i);
+      dataChart.push(max[i]);
+    }
+    state.chart = { labels: labels, dataChart: dataChart };
   }
 };
 
@@ -68,6 +109,23 @@ const actions = {
   },
   setInitialCurrency: async (context, payload) => {
     await context.commit("setInitialCurrency", payload);
+  },
+  setInitialChart: async (context, payload) => {
+    let date = new Date();
+    let formatedDate = formatDate(date);
+    let newDate = formatDate(
+      new Date(date.getFullYear() - 1, date.getMonth(), date.getDay())
+    );
+    await AXIOS.get(
+      "history?start_at=" +
+        newDate +
+        "&end_at=" +
+        formatedDate +
+        "&symbols=" +
+        payload
+    ).then(response => {
+      context.commit("setInitialChart", response);
+    });
   }
 };
 

@@ -11,7 +11,10 @@
       </b-table>
     </div>
     <div>
-      <Chart></Chart>
+      <Chart
+        :labels="getDataChart.labels"
+        :data-chart="getDataChart.dataChart"
+      ></Chart>
     </div>
   </div>
 </template>
@@ -36,6 +39,9 @@ export default {
       for (let key in data)
         items.push({ id: ++i, Currency: key, Rate: data[key] });
       return items;
+    },
+    getDataChart: function() {
+      return this.$store.getters.getDataChart;
     }
   },
   beforeMount() {
@@ -65,4 +71,10 @@ export default {
   border-radius: 10px;
   border-width: 0;
 }
+/*
+.chart {
+  border: 1px solid #f0f0f0;
+  border-radius: 5px;
+  background: white;
+}*/
 </style>
