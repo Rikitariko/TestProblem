@@ -59,6 +59,9 @@ const state = {
 };
 
 const getters = {
+  getCurrency: state => {
+    return state.currency;
+  },
   getCurrencyTable: state => {
     return state.table;
   },
@@ -76,7 +79,6 @@ const mutations = {
   },
   setInitialChart: (state, payload) => {
     let date = new Date();
-    //console.log(date);
     let data = payload.data.rates;
 
     let max = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -89,11 +91,11 @@ const mutations = {
 
     let dataChart = [];
     let labels = [];
-    for (let i = date.getMonth(); i <= 12; i++) {
+    for (let i = date.getMonth() + 1; i <= 12; i++) {
       labels.push(i);
       dataChart.push(max[i]);
     }
-    for (let i = 1; i < date.getMonth(); i++) {
+    for (let i = 1; i < date.getMonth() + 1; i++) {
       labels.push(i);
       dataChart.push(max[i]);
     }
@@ -114,8 +116,9 @@ const actions = {
     let date = new Date();
     let formatedDate = formatDate(date);
     let newDate = formatDate(
-      new Date(date.getFullYear() - 1, date.getMonth(), date.getDay())
+      new Date(date.getFullYear() - 1, date.getMonth() + 1, date.getDay())
     );
+    console.log(newDate.toString());
     await AXIOS.get(
       "history?start_at=" +
         newDate +

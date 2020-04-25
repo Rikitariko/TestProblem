@@ -1,51 +1,59 @@
-<div class="Chart">
-  <h1 style="text-align:center;">Barchart</h1>
-  <Line />
-</div>
+<template>
+  <div class="chart">
+    <LineChart :chart-data="dataPoints"></LineChart>
+  </div>
+</template>
 
 <script>
-import { Line } from "vue-chartjs/es/BaseCharts";
-import { reactiveData } from "vue-chartjs/es/mixins/index";
-
-import Vue from "vue";
-Vue.component("Line", Line);
+import LineChart from "./LineChart";
 
 export default {
-  extends: Line,
-  mixins: [reactiveData],
-  props: {
-      // eslint-disable-next-line vue/require-valid-default-prop
-    labels: { type: Array, default: [1, 2] },
-      // eslint-disable-next-line vue/require-valid-default-prop
-    dataChart: { type: Array, default: [1, 2] }
+  components: {
+    LineChart
   },
-  mounted: function mounted() {
-    this.renderChart(
-      {
-        labels: this.labels,
+  data() {
+    return {
+      dataPoints: null,
+      height: 20
+    };
+  },
+  mounted() {
+    setInterval(() => {
+      this.fillData();
+    }, 2000);
+  },
+  computed: {
+    getDataChart: function() {
+      return this.$store.getters.getDataChart;
+    }
+  },
+  methods: {
+    fillData() {
+      this.dataPoints = {
+        labels: this.getDataChart.labels,
         datasets: [
           {
-            smooth: false,
             label: "EUR to RUB",
-            fill: "start",
-            backgroundColor: "blue",
-            data: this.dataChart
+            backgroundColor: "#f87979",
+            data: this.getDataChart.dataChart
           }
         ]
-      },
-      {
-        responsive: true,
-        maintainAspectRatio: false
-      }
-    );
+      };
+    }
   }
 };
 </script>
 
 <style>
+.chart {
+  border: 1px solid #f0f0f0;
+  border-radius: 5px;
+  background: white;
+}
+
 #line-chart.chartjs-render-monitor {
   height: 300px;
-  width: 300px;
+  width: 400px;
   margin: 20px;
 }
 </style>

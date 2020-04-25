@@ -1,11 +1,18 @@
-import { Line, mixins } from "vue-chartjs";
-const { reactiveProp } = mixins;
+import { Line } from "vue-chartjs/es/BaseCharts";
+import { reactiveProp } from "vue-chartjs/es/mixins";
 
 export default {
   extends: Line,
   mixins: [reactiveProp],
-  props: ["options"],
-  mounted() {
+  data: function data() {
+    return {
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    };
+  },
+  mounted: function mounted() {
     this.renderChart(this.chartData, this.options);
   }
-};
+}
