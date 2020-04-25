@@ -8,15 +8,24 @@
         </div>
       </template>
     </b-table>
+    <div>
+      <Chart></Chart>
+      <Chart></Chart>
+    </div>
   </div>
 </template>
 
 <script>
+import Chart from "./Chart";
+
 export default {
   data() {
     return {
       isBusy: false
     };
+  },
+  components: {
+    Chart
   },
   computed: {
     getDataTable: function() {
@@ -39,13 +48,16 @@ export default {
 
 <style scoped>
 .container {
-  width: 600px;
+  width: 100%;
   margin: 0;
+  display: flex;
+  flex-direction: row;
   box-sizing: content-box;
   padding: 50px;
   z-index: 5;
 }
 .table {
+  min-width: 600px;
   background: white;
   border-radius: 10px;
   border-width: 0;

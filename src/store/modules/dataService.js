@@ -6,6 +6,7 @@ const AXIOS = axios.create({
 });
 
 const state = {
+  initialCurrency: "USD",
   currency: [
     "CAD",
     "HKD",
@@ -51,17 +52,22 @@ const getters = {
 };
 
 const mutations = {
-  setInitialCurrency: (state, payload) => {
-    //console.log(payload.rates);
+  setInitialTable: (state, payload) => {
     state.table = payload.rates;
+  },
+  setInitialCurrency: (state, payload) => {
+    state.initialCurrency = payload;
   }
 };
 
 const actions = {
-  setInitialValue: async context => {
-    await AXIOS.get("latest").then(response => {
-      context.commit("setInitialCurrency", response.data);
+  setInitialTable: async context => {
+    await AXIOS.get("latest?base=" + state.initialCurrency).then(response => {
+      context.commit("setInitialTable", response.data);
     });
+  },
+  setInitialCurrency: async (context, payload) => {
+    await context.commit("setInitialCurrency", payload);
   }
 };
 
