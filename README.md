@@ -1,4 +1,7 @@
-# setsproblem
+# Prerequisites
+To start the project on your local machine, you need to install following programs:
+
+Node.js LTS (Yarn is shipped with Node.js too)
 
 ## Project setup
 ```
